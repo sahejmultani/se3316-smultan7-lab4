@@ -8,7 +8,7 @@ import '../styling/UnauthHome.css'
 function UnauthHome (){
 
     return (
-        <div className="homepage">
+        <div className="unAuthHomepage">
 
             <h1>Welcome to my Superhero App</h1>
             <Link to="/signup">Signup Page</Link>
