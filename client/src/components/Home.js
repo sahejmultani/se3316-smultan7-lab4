@@ -1,3 +1,5 @@
+//authorized user home page
+
 import React from "react"
 import {useLocation, useNavigate} from 'react-router-dom';
 
