@@ -9,6 +9,7 @@ function Login() {
 
     const history=useNavigate();
 
+    const [userName, setUserName] = useState('');
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
 
@@ -23,6 +24,7 @@ function Login() {
             .then(res=>{
                 if(res.data=="exist"){
                     const name = res.data.name;
+                    setUserName(name);
                     history("/home",{state:{id:name}})
                 }
                 else if(res.data=="notexist"){
@@ -38,7 +40,7 @@ function Login() {
         catch(e){
             console.log(e);
 
-        }
+        } 
 
     }
 
