@@ -59,7 +59,8 @@ function Login() {
             <p>OR</p>
             <br />
 
-            <Link to="/">Login Page</Link>
+            <Link to="/login">Login Page</Link>
+            <Link to="/">Back to guest main page </Link>
 
         </div>
     )

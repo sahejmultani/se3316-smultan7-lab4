@@ -1,5 +1,6 @@
 //login page 
 
+import '../styling/Login.css'
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
@@ -18,7 +19,7 @@ function Login() {
 
         try{
 
-            await axios.post("http://localhost:8000/",{
+            await axios.post("http://localhost:8000/login",{
                 email,password
             })
             .then(res=>{
@@ -62,6 +63,7 @@ function Login() {
             <br />
 
             <Link to="/signup">Signup Page</Link>
+            <Link to="/">Back to guest main page </Link>
 
         </div>
     )
