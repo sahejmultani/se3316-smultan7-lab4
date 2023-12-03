@@ -1,6 +1,6 @@
-/* Login.css */
+/* signup.css */
 
-.login {
+.signup {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -10,39 +10,39 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  .login h1 {
+  .signup h1 {
     text-align: center;
     color: #333;
   }
   
-  .login form {
+  .signup form {
     display: flex;
     flex-direction: column;
   }
   
-  .login input {
+  .signup input {
     margin-bottom: 10px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
   
-  .login input[type="submit"] {
+  .signup input[type="submit"] {
     background-color: #4caf50;
     color: #fff;
     cursor: pointer;
   }
   
-  .login input[type="submit"]:hover {
+  .signup input[type="submit"]:hover {
     background-color: #45a049;
   }
   
-  .login p {
+  .signup p {
     text-align: center;
     margin-top: 20px;
   }
   
-  .login a {
+  .signup a {
     display: block;
     text-align: center;
     margin-top: 10px;
@@ -50,7 +50,7 @@
     text-decoration: none;
   }
   
-  .login a:hover {
+  .signup a:hover {
     text-decoration: underline;
   }
   
