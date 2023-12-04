@@ -1,3 +1,5 @@
+//unauth, auth, and admin should have seperate endpoints
+
 const express = require("express")
 const collection = require("./mongo")
 const cors = require("cors")
@@ -24,7 +26,19 @@ const combinedSuperheroes = heroInfo.map(infojsonHero => { //array of combined h
 //function to get the true powers of a hero
 function getPowers(){} //may have to use power json
 
+app.get("/unauth/searchByName", (req,res)=>{ //unauth search by name---------- CHANGE SO ENDPOINT WORKS FOR RACE, NAME, POWER, PUBLISHER
+    const searchName = req.query.name;
 
+    if(!searchName){
+        return res.status(400).json({ error: "Name parameter is required" });
+    }
+
+    const searchResults = combinedSuperheroes.filter(hero =>
+        hero.name.toLowerCase().includes(searchName.toLowerCase())
+      );
+    
+      res.status(200).json({ results: searchResults });
+});
 
 
 

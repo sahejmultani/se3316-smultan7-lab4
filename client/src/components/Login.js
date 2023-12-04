@@ -1,5 +1,9 @@
 //login page 
 
+//ABLE TO LOGIN WITHOUT ENTERING PASSWORD IF EMAIL EXISTS FIX THISSSSSSSSS
+
+
+
 import '../styling/Login.css'
 import React, { useEffect, useState } from "react"
 import axios from "axios"
