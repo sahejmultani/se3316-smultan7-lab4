@@ -13,6 +13,7 @@ function Login() {
     const [userName, setUserName] = useState('');
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
+    
 
     async function submit(e){
         e.preventDefault();
@@ -23,13 +24,14 @@ function Login() {
                 email,password
             })
             .then(res=>{
+            
                 if(res.data=="exist"){
                     const name = res.data.name;
                     setUserName(name);
                     history("/home",{state:{id:name}})
                 }
                 else if(res.data=="notexist"){
-                    alert("User have not sign up")
+                    alert("User has not signed up")
                 }
             })
             .catch(e=>{
@@ -44,6 +46,8 @@ function Login() {
         } 
 
     }
+
+    
 
 
     return (
