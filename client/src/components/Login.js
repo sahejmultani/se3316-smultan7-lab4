@@ -28,7 +28,7 @@ function Login() {
                 if(res.data=="exist"){
                     const name = res.data.name;
                     setUserName(name);
-                    history("/home",{state:{id:name}})
+                    history("/home",{state:{id:userName}})
                 }
                 else if(res.data=="notexist"){
                     alert("User has not signed up")

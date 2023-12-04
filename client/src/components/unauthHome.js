@@ -44,8 +44,8 @@ function UnauthHome (){
                 <button type="submit">Search</button>
                 <input type="text" placeholder="Search by Publisher" />
                 <button type="submit">Search</button>
-
             </form>
+
             <div className="searchResults">
 
             </div>

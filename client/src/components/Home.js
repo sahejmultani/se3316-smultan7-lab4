@@ -6,6 +6,7 @@ show full info of lists
 ability to edit the lists
 delete a list
 add a review to a list (others list)
+LOGOUT BUTTON
 
 ----------ADMIN
 special user for admin access
