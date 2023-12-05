@@ -40,11 +40,9 @@ const completeHeroInfo = infoJSON.map((hero) => {
   };
 });
 
+  
 
-
-
-
-app.get("/unauth/search", (req, res) => {
+  app.get("/unauth/search", (req, res) => {
     const { name, race, publisher, powers } = req.query;
   
     // Check if at least one search parameter is provided
@@ -63,13 +61,13 @@ app.get("/unauth/search", (req, res) => {
   
     if (race) {
       searchResults = searchResults.filter((hero) =>
-        hero.race.toLowerCase().includes(race.toLowerCase())
+        hero.Race.toLowerCase().includes(race.toLowerCase())
       );
     }
   
     if (publisher) {
       searchResults = searchResults.filter((hero) =>
-        hero.publisher.toLowerCase().includes(publisher.toLowerCase())
+        hero.Publisher.toLowerCase().includes(publisher.toLowerCase())
       );
     }
   
@@ -80,11 +78,8 @@ app.get("/unauth/search", (req, res) => {
     }
   
     res.status(200).json({ results: searchResults });
-  }); 
+  });
   
-
-
-
 
 
 

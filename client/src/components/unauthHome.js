@@ -1,5 +1,3 @@
-//working unauth.js
-
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
@@ -8,19 +6,24 @@ import '../styling/UnauthHome.css';
 function UnauthHome() {
   const [nameSearch, setNameSearch] = useState('');
   const [powerSearch, setPowerSearch] = useState('');
+  const [raceSearch, setRaceSearch] = useState('');
+  const [publisherSearch, setPublisherSearch] = useState('');
 
   const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
 
-    if (!nameSearch && !powerSearch) { //if empty fields no results shown 
-        setSearchResults([]);
-        return;
-      }
+  useEffect(() => {
+    if (!nameSearch && !powerSearch && !raceSearch && !publisherSearch) {
+      // If all fields are empty, clear the results
+      setSearchResults([]);
+      return;
+    }
 
     const fetchSearchResults = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/unauth/search?name=${nameSearch}&powers=${powerSearch}`);
+        const response = await axios.get(
+          `http://localhost:8000/unauth/search?name=${nameSearch}&powers=${powerSearch}&race=${raceSearch}&publisher=${publisherSearch}`
+        );
         setSearchResults(response.data.results);
       } catch (error) {
         console.error("Search failed:", error.message);
@@ -28,11 +31,9 @@ function UnauthHome() {
     };
 
     fetchSearchResults();
-  }, [nameSearch, powerSearch]);
+  }, [nameSearch, powerSearch, raceSearch, publisherSearch]);
 
-//add function so if all fields empty list clears
-
-
+  
 
   return (
     <div className="inital">
@@ -49,20 +50,34 @@ function UnauthHome() {
       </div>
 
       <form className="search">
-        <input
-          type="text"
-          placeholder="Search by Name"
-          value={nameSearch}
-          onChange={(e) => setNameSearch(e.target.value)}
-        />
+  <input
+    type="text"
+    placeholder="Search by Name"
+    value={nameSearch}
+    onChange={(e) => setNameSearch(e.target.value)}
+  />
 
-        <input
-          type="text"
-          placeholder="Search by Power"
-          value={powerSearch}
-          onChange={(e) => setPowerSearch(e.target.value)}
-        />
-      </form>
+  <input
+    type="text"
+    placeholder="Search by Power"
+    value={powerSearch}
+    onChange={(e) => setPowerSearch(e.target.value)}
+  />
+
+  <input
+    type="text"
+    placeholder="Search by Race"
+    value={raceSearch}
+    onChange={(e) => setRaceSearch(e.target.value)}
+  />
+
+  <input
+    type="text"
+    placeholder="Search by Publisher"
+    value={publisherSearch}
+    onChange={(e) => setPublisherSearch(e.target.value)}
+  />
+</form>
 
       <div className="searchResults">
         <h2>Search Results:</h2>
