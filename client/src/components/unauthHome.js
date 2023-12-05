@@ -12,6 +12,12 @@ function UnauthHome() {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
+
+    if (!nameSearch && !powerSearch) { //if empty fields no results shown 
+        setSearchResults([]);
+        return;
+      }
+
     const fetchSearchResults = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/unauth/search?name=${nameSearch}&powers=${powerSearch}`);

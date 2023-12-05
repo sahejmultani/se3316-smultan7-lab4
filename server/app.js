@@ -44,24 +44,6 @@ const completeHeroInfo = infoJSON.map((hero) => {
 
 
 
-/*          WORKING SEARCH BY NAME
-
-app.get("/unauth/searchByName", (req,res)=>{ //unauth search by name---------- CHANGE SO ENDPOINT WORKS FOR RACE, NAME, POWER, PUBLISHER
-    const searchName = req.query.name;
-
-    if(!searchName){
-        return res.status(400).json({ error: "Name parameter is required" });
-    }
-
-    const searchResults = completeHeroInfo.filter(hero =>
-        hero.name.toLowerCase().includes(searchName.toLowerCase())
-      );
-    
-      res.status(200).json({ results: searchResults });
-}); */
-
-
-
 app.get("/unauth/search", (req, res) => {
     const { name, race, publisher, powers } = req.query;
   
