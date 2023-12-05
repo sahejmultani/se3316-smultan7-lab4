@@ -10,21 +10,40 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
+/* 
+            used for superhero data and searching
+*/
+const readInfo = fs.readFileSync('superheroes/superhero_info.json', 'utf-8');
+const infoJSON = JSON.parse(readInfo);
+const readPowers = fs.readFileSync('superheroes/superhero_powers.json', 'utf-8');
+const powersJSON = JSON.parse(readPowers);
 
-//loading json files and combining them to be used for searches
-const file1Content = fs.readFileSync('superheroes/superhero_info.json', 'utf-8');
-const heroInfo = JSON.parse(file1Content);
-const file2Content = fs.readFileSync('superheroes/superhero_powers.json', 'utf-8');
-const heroPowers = JSON.parse(file2Content);
+const superheroPowers = powersJSON.map((hero) => { //gets powers of each here and returns [{hero_name: , powers: []},]
+  const { hero_names, ...powers } = hero;
+  const trueAbilities = Object.entries(powers)
+    .filter(([key, value]) => key !== 'hero_names' && String(value).toLowerCase() === 'true')
+    .map(([key]) => key);
 
-const combinedSuperheroes = heroInfo.map(infojsonHero => { //array of combined heros and info
-    const matchingHero = heroPowers.find(powerjsonHero => powerjsonHero.hero_names === infojsonHero.name);
-    const { hero_names, ...restOfHero2 } = matchingHero || {};
-    return matchingHero ? { ...infojsonHero, ...restOfHero2 } : infojsonHero;
-  }); 
+  return {
+    hero_names,
+    abilities: trueAbilities,
+  };
+});
 
-//function to get the true powers of a hero
-function getPowers(){} //may have to use power json
+//combines data from info json and the superheroPowers object array
+const completeHeroInfo = infoJSON.map((hero) => { 
+  const matchingPowers = superheroPowers.find((powers) => powers.hero_names === hero.name);
+
+  return {
+    ...hero,
+    powers: matchingPowers ? matchingPowers.abilities : [],
+  };
+});
+
+
+
+
+
 
 app.get("/unauth/searchByName", (req,res)=>{ //unauth search by name---------- CHANGE SO ENDPOINT WORKS FOR RACE, NAME, POWER, PUBLISHER
     const searchName = req.query.name;
@@ -33,12 +52,29 @@ app.get("/unauth/searchByName", (req,res)=>{ //unauth search by name---------- C
         return res.status(400).json({ error: "Name parameter is required" });
     }
 
-    const searchResults = combinedSuperheroes.filter(hero =>
+    const searchResults = completeHeroInfo.filter(hero =>
         hero.name.toLowerCase().includes(searchName.toLowerCase())
       );
     
       res.status(200).json({ results: searchResults });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
