@@ -44,6 +44,7 @@ const completeHeroInfo = infoJSON.map((hero) => {
 
 
 
+/*          WORKING SEARCH BY NAME
 
 app.get("/unauth/searchByName", (req,res)=>{ //unauth search by name---------- CHANGE SO ENDPOINT WORKS FOR RACE, NAME, POWER, PUBLISHER
     const searchName = req.query.name;
@@ -57,8 +58,48 @@ app.get("/unauth/searchByName", (req,res)=>{ //unauth search by name---------- C
       );
     
       res.status(200).json({ results: searchResults });
-});
+}); */
 
+
+
+app.get("/unauth/search", (req, res) => {
+    const { name, race, publisher, powers } = req.query;
+  
+    // Check if at least one search parameter is provided
+    if (!name && !race && !publisher && !powers) {
+      return res.status(400).json({ error: "At least one search parameter is required" });
+    }
+  
+    let searchResults = [...completeHeroInfo];
+  
+    // Filter based on the provided parameters
+    if (name) {
+      searchResults = searchResults.filter((hero) =>
+        hero.name.toLowerCase().includes(name.toLowerCase())
+      );
+    }
+  
+    if (race) {
+      searchResults = searchResults.filter((hero) =>
+        hero.race.toLowerCase().includes(race.toLowerCase())
+      );
+    }
+  
+    if (publisher) {
+      searchResults = searchResults.filter((hero) =>
+        hero.publisher.toLowerCase().includes(publisher.toLowerCase())
+      );
+    }
+  
+    if (powers) {
+      searchResults = searchResults.filter((hero) =>
+        hero.powers.some((power) => power.toLowerCase().includes(powers.toLowerCase()))
+      );
+    }
+  
+    res.status(200).json({ results: searchResults });
+  }); 
+  
 
 
 
