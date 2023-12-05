@@ -91,28 +91,49 @@ function UnauthHome() {
       </form>
 
       <div className="searchResults">
-        <h2>Search Results:</h2>
-        {searchResults.length === 0 ? (
-          <p>{(nameSearch || powerSearch || raceSearch || publisherSearch) ? 'No results found.' : null}</p>
-        ) : (
-          searchResults.map((result) => (
-            <div key={result.id}>
-              <p onClick={() => toggleExpanded(result.id)}>
+  {searchResults.length === 0 ? (
+    <p>{(nameSearch || powerSearch || raceSearch || publisherSearch) ? 'No results found.' : null}</p>
+  ) : (
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          {/* Add more header columns as needed */}
+        </tr>
+      </thead>
+      <tbody>
+        {searchResults.map((result) => (
+          <React.Fragment key={result.id}>
+            <tr>
+              <td onClick={() => toggleExpanded(result.id)}>
                 {result.name}
-              </p>
-              {/* Additional information to show when expanded */}
-              {expandedResults.includes(result.id) && (
-                <div>
+              </td>
+              {/* Additional header columns as needed */}
+            </tr>
+            {/* Expanded information */}
+            {expandedResults.includes(result.id) && (
+              <tr>
+                <td colSpan="100%" className="expandedInfo">
                   <p>Gender: {result.Gender}</p>
+                  <p>Eye Colour: {result['Eye color']}</p>
                   <p>Race: {result.Race}</p>
+                  <p>Hair Colour: {result['Hair color']}</p>
+                  <p>Height: {result.Height}</p>
                   <p>Publisher: {result.Publisher}</p>
-                  {/* Add more information as needed */}
-                </div>
-              )}
-            </div>
-          ))
-        )}
-      </div>
+                  <p>Skin Colour: {result['Skin color']}</p>
+                  <p>Alignment: {result.Alignment}</p>
+                  <p>Weight: {result.Weight}</p>
+                  <p>Powers: {result.powers.join(', ')}</p>
+                 
+                </td>
+              </tr>
+            )}
+          </React.Fragment>
+        ))}
+      </tbody>
+    </table>
+  )}
+</div>
     </div>
   );
 }
