@@ -156,3 +156,44 @@ app.listen(8000,()=>{
     console.log("port connected");
 })
 
+
+//          FOR AUTHORIZED USER
+
+app.get("/authorized/search", (req, res) => {
+    const { name, race, publisher, powers } = req.query;
+  
+    // Check if at least one search parameter is provided
+    if (!name && !race && !publisher && !powers) {
+      return res.status(400).json({ error: "At least one search parameter is required" });
+    }
+  
+    let searchResults = [...completeHeroInfo];
+  
+    // Filter based on the provided parameters
+    if (name) {
+      searchResults = searchResults.filter((hero) =>
+        hero.name.toLowerCase().includes(name.toLowerCase())
+      );
+    }
+  
+    if (race) {
+      searchResults = searchResults.filter((hero) =>
+        hero.Race.toLowerCase().includes(race.toLowerCase())
+      );
+    }
+  
+    if (publisher) {
+      searchResults = searchResults.filter((hero) =>
+        hero.Publisher.toLowerCase().includes(publisher.toLowerCase())
+      );
+    }
+  
+    if (powers) {
+      searchResults = searchResults.filter((hero) =>
+        hero.powers.some((power) => power.toLowerCase().includes(powers.toLowerCase()))
+      );
+    }
+  
+    res.status(200).json({ results: searchResults });
+  });
+  
