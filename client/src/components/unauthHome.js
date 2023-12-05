@@ -4,27 +4,30 @@ import axios from "axios";
 import '../styling/UnauthHome.css';
 
 function UnauthHome() {
+    
   const [nameSearch, setNameSearch] = useState('');
   const [powerSearch, setPowerSearch] = useState('');
   const [raceSearch, setRaceSearch] = useState('');
   const [publisherSearch, setPublisherSearch] = useState('');
-
   const [searchResults, setSearchResults] = useState([]);
-
+  const [expandedResults, setExpandedResults] = useState([]);
 
   useEffect(() => {
-    if (!nameSearch && !powerSearch && !raceSearch && !publisherSearch) {
-      // If all fields are empty, clear the results
-      setSearchResults([]);
-      return;
-    }
-
     const fetchSearchResults = async () => {
+
+        if (!nameSearch && !powerSearch && !raceSearch && !publisherSearch) {
+            // If all fields are empty, clear the results
+            setSearchResults([]);
+            return;
+          }
+
       try {
         const response = await axios.get(
           `http://localhost:8000/unauth/search?name=${nameSearch}&powers=${powerSearch}&race=${raceSearch}&publisher=${publisherSearch}`
         );
         setSearchResults(response.data.results);
+        // Reset expanded results when performing a new search
+        setExpandedResults([]);
       } catch (error) {
         console.error("Search failed:", error.message);
       }
@@ -33,7 +36,16 @@ function UnauthHome() {
     fetchSearchResults();
   }, [nameSearch, powerSearch, raceSearch, publisherSearch]);
 
-  
+  // Function to toggle expanded state for a result
+  const toggleExpanded = (id) => {
+    setExpandedResults((prevExpanded) => {
+      if (prevExpanded.includes(id)) {
+        return prevExpanded.filter((expandedId) => expandedId !== id);
+      } else {
+        return [...prevExpanded, id];
+      }
+    });
+  };
 
   return (
     <div className="inital">
@@ -56,21 +68,18 @@ function UnauthHome() {
     value={nameSearch}
     onChange={(e) => setNameSearch(e.target.value)}
   />
-
   <input
     type="text"
     placeholder="Search by Power"
     value={powerSearch}
     onChange={(e) => setPowerSearch(e.target.value)}
   />
-
   <input
     type="text"
     placeholder="Search by Race"
     value={raceSearch}
     onChange={(e) => setRaceSearch(e.target.value)}
   />
-
   <input
     type="text"
     placeholder="Search by Publisher"
@@ -83,7 +92,19 @@ function UnauthHome() {
         <h2>Search Results:</h2>
         {searchResults.map((result) => (
           <div key={result.id}>
-            <p>{result.name}</p>
+            <p onClick={() => toggleExpanded(result.id)}>
+              {result.name}
+            </p>
+            {/* clicking on hero expands the info */}
+            {expandedResults.includes(result.id) && (
+              <div>
+                <p>Gender: {result.Gender}</p>
+                <p>Race: {result.Race}</p>
+                <p>Publisher: {result.Publisher}</p>
+                <p>Powers: {result.powers}</p>
+                
+              </div>
+            )}
           </div>
         ))}
       </div>
