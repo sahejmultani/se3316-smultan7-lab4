@@ -1,10 +1,12 @@
+//add input sanitation
+
+
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import '../styling/UnauthHome.css';
 
 function UnauthHome() {
-    
   const [nameSearch, setNameSearch] = useState('');
   const [powerSearch, setPowerSearch] = useState('');
   const [raceSearch, setRaceSearch] = useState('');
@@ -13,14 +15,14 @@ function UnauthHome() {
   const [expandedResults, setExpandedResults] = useState([]);
 
   useEffect(() => {
+
+    if (!nameSearch && !powerSearch && !raceSearch && !publisherSearch) {
+        // If all fields are empty, clear the results
+        setSearchResults([]);
+        return;
+      }
+
     const fetchSearchResults = async () => {
-
-        if (!nameSearch && !powerSearch && !raceSearch && !publisherSearch) {
-            // If all fields are empty, clear the results
-            setSearchResults([]);
-            return;
-          }
-
       try {
         const response = await axios.get(
           `http://localhost:8000/unauth/search?name=${nameSearch}&powers=${powerSearch}&race=${raceSearch}&publisher=${publisherSearch}`
@@ -62,7 +64,7 @@ function UnauthHome() {
       </div>
 
       <form className="search">
-  <input
+      <input
     type="text"
     placeholder="Search by Name"
     value={nameSearch}
@@ -86,27 +88,30 @@ function UnauthHome() {
     value={publisherSearch}
     onChange={(e) => setPublisherSearch(e.target.value)}
   />
-</form>
+      </form>
 
       <div className="searchResults">
         <h2>Search Results:</h2>
-        {searchResults.map((result) => (
-          <div key={result.id}>
-            <p onClick={() => toggleExpanded(result.id)}>
-              {result.name}
-            </p>
-            {/* clicking on hero expands the info */}
-            {expandedResults.includes(result.id) && (
-              <div>
-                <p>Gender: {result.Gender}</p>
-                <p>Race: {result.Race}</p>
-                <p>Publisher: {result.Publisher}</p>
-                <p>Powers: {result.powers}</p>
-                
-              </div>
-            )}
-          </div>
-        ))}
+        {searchResults.length === 0 ? (
+          <p>{(nameSearch || powerSearch || raceSearch || publisherSearch) ? 'No results found.' : null}</p>
+        ) : (
+          searchResults.map((result) => (
+            <div key={result.id}>
+              <p onClick={() => toggleExpanded(result.id)}>
+                {result.name}
+              </p>
+              {/* Additional information to show when expanded */}
+              {expandedResults.includes(result.id) && (
+                <div>
+                  <p>Gender: {result.Gender}</p>
+                  <p>Race: {result.Race}</p>
+                  <p>Publisher: {result.Publisher}</p>
+                  {/* Add more information as needed */}
+                </div>
+              )}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
