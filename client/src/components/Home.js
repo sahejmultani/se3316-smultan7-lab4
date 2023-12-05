@@ -24,21 +24,7 @@ import {useLocation, useNavigate, Link} from 'react-router-dom';
 import axios from "axios";
  
 
-/*                                  IF USER DOES /HOME FOR URL, IT SHOULD TELL THEM TO SIGN IN FIRST
-function Home (){
-    const location=useLocation()
-
-    return (
-        <div className="homepage">
-
-            <h1>Welcome to your dashboard {location.state.id}!</h1>
-            <p>Explore Superhero info</p>
-
-        </div>
-    )
-} */
-
-
+//                              IF USER DOES /HOME FOR URL, IT SHOULD TELL THEM TO SIGN IN FIRST
 
 
 
@@ -88,20 +74,20 @@ function Home() {
     };
   
     return (
-      <div className="inital">
+      <div className="authHomeInital">
         <div className="AuthorizedHomepage">
         <h1>Welcome to your dashboard {location.state.id}!</h1>
 
           <button className='logoutButton'>LOGOUT</button>
 
-          <div className="about-app">
-            <h3>About the App</h3>
-            <p>You are now signed in! Now you are able to create and view many lists of superheroes!!</p>
+          <div className="authAbout">
+            <h3>You are now signed in and are able to create and view many lists of superheroes!!</h3>
+            
             
           </div>
         </div>
   
-        <form className="search">
+        <form className="authSearch">
         <input
       type="text"
       placeholder="Search by Name"
@@ -128,7 +114,7 @@ function Home() {
     />
         </form>
   
-        <div className="searchResults">
+        <div className="authSearchResults">
     {searchResults.length === 0 ? (
       <p>{(nameSearch || powerSearch || raceSearch || publisherSearch) ? 'No results found.' : null}</p>
     ) : (

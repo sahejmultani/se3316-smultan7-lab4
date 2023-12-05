@@ -1,34 +1,123 @@
 /* Home.css */
 
-.homepage {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-    background-color: #2980b9;
-  }
-  
-  .homepage h1 {
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .homepage p {
-    font-size: 16px;
-    color: #666;
-  }
-  
-  .homepage a {
-    display: block;
-    margin-top: 20px;
-    padding: 10px;
-    text-decoration: none;
-    color: #fff;
-    background-color: #3498db;
-    border-radius: 4px;
-  }
-  
-  .homepage a:hover {
-    background-color: #2980b9;
-  }
-  
+.authHomepage {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.authHomepage h1 {
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.authHomepage h3 {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.authHomepage p {
+  font-weight: bold;
+}
+
+.authHomepage button {
+  display: block;
+  margin-top: 20px;
+  padding: 10px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #4caf50;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.authHomepage button:hover {
+  background-color: #45a049;
+}
+
+.authAbout {
+  margin-top: 20px;
+}
+
+.authAbout h3 {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.authAbout p {
+  font-weight: bold;
+}
+
+.authSearch {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.authSearch input {
+  padding: 10px;
+  margin: 0 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.authSearchResults {
+  margin-top: 20px;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* Expanded information styles */
+.expandedInfo {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+}
+
+.expandedInfo p {
+  margin: 0;
+}
+
+/* Style for alternate rows */
+table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover effect for clickable rows */
+table tbody tr:hover {
+  cursor: pointer;
+  background-color: #e0e0e0;
+}
+
+.expandedInfo {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+}
+
+.expandedInfo p {
+  margin: 0;
+}
