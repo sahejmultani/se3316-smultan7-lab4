@@ -49,6 +49,11 @@ function UnauthHome() {
     });
   };
 
+  const searchOnDDG = (query) => {
+    const duckDuckGoUrl = `https://duckduckgo.com/?q=${query}`;
+    window.open(duckDuckGoUrl, '_blank');
+  };
+
   return (
     <div className="inital">
       <div className="unAuthHomepage">
@@ -106,7 +111,9 @@ function UnauthHome() {
           <React.Fragment key={result.id}>
             <tr>
               <td onClick={() => toggleExpanded(result.id)}>
-                {result.name}
+                {result.name + ', Publisher: ' + result.Publisher}
+                <button className="ddg-search" onClick={() => searchOnDDG(`${result.name} ${result.Publisher}`)}>Search on DDG</button>
+
               </td>
               {/* Additional header columns as needed */}
             </tr>

@@ -73,6 +73,12 @@ function Home() {
       });
     };
   
+    const searchOnDDG = (query) => {
+        const duckDuckGoUrl = `https://duckduckgo.com/?q=${query}`;
+        window.open(duckDuckGoUrl, '_blank');
+      };
+
+
     return (
       <div className="authHomeInital">
         <div className="AuthorizedHomepage">
@@ -81,7 +87,7 @@ function Home() {
           <button className='logoutButton'>LOGOUT</button>
 
           <div className="authAbout">
-            <h3>You are now signed in and are able to create and view many lists of superheroes!!</h3>
+            <h3>You are now signed in and are able to create and view many lists of superheroes! Start typing to search</h3>
             
             
           </div>
@@ -130,7 +136,8 @@ function Home() {
             <React.Fragment key={result.id}>
               <tr>
                 <td onClick={() => toggleExpanded(result.id)}>
-                  {result.name}
+                {result.name + ', Publisher: ' + result.Publisher}
+                <button className="ddg-search" onClick={() => searchOnDDG(`${result.name} ${result.Publisher}`)}>Search on DDG</button>
                 </td>
                 {/* Additional header columns as needed */}
               </tr>
