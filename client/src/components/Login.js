@@ -10,6 +10,7 @@ import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
 
 
+
 function Login() {
 
     const history=useNavigate();
@@ -33,6 +34,11 @@ function Login() {
                     const name = res.data.name;
                     setUserName(name);
                     history("/home",{state:{id:userName}})
+                }
+                else if(res.data == "admin"){
+                    const name = "admin";
+                    setUserName(name);
+                    history("/admin",{state:{id:userName}})
                 }
                 
                 else if(res.data=="notexist"){

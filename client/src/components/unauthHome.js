@@ -68,6 +68,9 @@ function UnauthHome() {
         </div>
       </div>
 
+      <div className="public-lists">Checkout some lists</div> 
+
+
       <form className="search">
       <input
     type="text"
