@@ -8,7 +8,13 @@ mongoose.connect(mongoUrl)
   .catch((error) => console.error('Database not connected', error));
 
 
-
+  const listSchema = new mongoose.Schema({
+    name: {
+      type: String,
+      required: true
+    },
+    superheroes:[String],
+  });
 
 const newSchema=new mongoose.Schema({
     name:{
@@ -24,19 +30,7 @@ const newSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    lists: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'List'
-    }],
-})
-
-const listSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  superheroes:[String],
-  // Add more fields as needed for your lists
+    lists: [listSchema],
 });
 
 newSchema.pre('save', async function (next) { //hashing password

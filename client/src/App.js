@@ -6,6 +6,7 @@ import UnauthHome from "./components/UnauthHome"
 import Admin from "./components/Admin"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
+import Dcma from "./components/Dcma"
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/home" element={<Home/>}/>
           <Route path="/admin" element={<Admin/>}/>
+          <Route path="/dcma" element={<Dcma/>}/>
+
+
 
         </Routes>
       </Router>

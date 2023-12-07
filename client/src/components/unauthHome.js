@@ -60,6 +60,8 @@ function UnauthHome() {
         <h1>Superhero App</h1>
         <Link to="/signup">Signup</Link>
         <Link to="/login">Login</Link>
+        <Link to="/dcma">DCMA</Link>
+
         <div className="about-app">
           <h3>About the App</h3>
           <p>Welcome to my superhero app! Here you are able to search through all of your favourite superheroes

@@ -24,13 +24,13 @@ function Login() {
                 name, email,password
             })
             .then(res=>{
-                if(res.data=="exist"){
+                if(res.data==="exist"){
                     alert("User already exists")
                 }
-                else if(res.data =="invalidCred"){
+                else if(res.data ==="invalidCred"){
                     alert("Enter all fields")
                 }
-                else if(res.data=="notexist"){
+                else if(res.data==="notexist"){
                     history("/home",{state:{id:name}})
                 }
             })

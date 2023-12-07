@@ -212,27 +212,38 @@ app.get("/authorized/search", (req, res) => {
 // Array to store lists
 let lists = [];
 
-/*
-app.post('/api/lists', async (req, res) => {
-    const { name, superheroes } = req.body;
-  
+
+app.post('/api/lists/:userID', async (req, res) => {
+    const {email, listName, superheroIds } = req.body;
+
+    //check userID by matching emails
+
     try {
-      const newList = new List({
-        name,
-        superheroes,
-      });
+        const user = await collection.findOne(email)
+
+
+         // Check if the user exists
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
   
-      await newList.save();
+      // Check if the user already has 20 lists
+      if (user.lists.length >= 20) {
+        return res.status(400).json({ error: "You can't create more than 20 lists." });
+      }
+
+      const newList = {
+        name: listName,
+      superheroes: superheroIds,
+      }
+
+      user.lists.push(newList);
+      await user.save();
+      res.status(201).json({ list: newList });
   
-      // Add the new list to the user's lists in the 'collection' model
-      const user = await collection.findOneAndUpdate(
-        { email: req.body.email  },
-        { $push: { lists: newList._id } },
-        { new: true }
-      );
-  
-      res.status(201).json(newList);
     } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error creating list:', error.message);
+        res.status(500).json({ error: 'Internal server error' })
     }
-  }); */
+    
+  }); 

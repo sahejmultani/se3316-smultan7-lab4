@@ -22,6 +22,7 @@ import '../styling/Home.css'
 import React, { useEffect, useState } from "react";
 import {useLocation, useNavigate, Link} from 'react-router-dom';
 import axios from "axios";
+
  
 
 //                              IF USER DOES /HOME FOR URL, IT SHOULD TELL THEM TO SIGN IN FIRST
@@ -136,7 +137,7 @@ const [lists, setLists] = useState([]);
         <h1>Welcome to your dashboard {location.state?.id || 'User'}!</h1>
 
           <button className='logoutButton'>LOGOUT</button>
-
+          <Link to="/dcma">DCMA</Link>
           <div className="authAbout">
             <h3>You are now signed in and are able to create and view many lists of superheroes! Start typing to search</h3>
           </div>
@@ -204,7 +205,7 @@ const [lists, setLists] = useState([]);
       <table>
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Search Results</th>
             {/* Add more header columns as needed */}
           </tr>
         </thead>

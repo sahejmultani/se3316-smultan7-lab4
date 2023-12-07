@@ -30,21 +30,21 @@ function Login() {
             })
             .then(res=>{
             
-                if(res.data=="exist"){
+                if(res.data==="exist"){
                     const name = res.data.name;
                     setUserName(name);
                     history("/home",{state:{id:userName}})
                 }
-                else if(res.data == "admin"){
+                else if(res.data === "admin"){
                     const name = "admin";
                     setUserName(name);
                     history("/admin",{state:{id:userName}})
                 }
                 
-                else if(res.data=="notexist"){
+                else if(res.data==="notexist"){
                     alert("User has not signed up")
                 }
-                else if(res.data == "Invalid password"){
+                else if(res.data === "Invalid password"){
                     alert("Invalid password")
                 }
             })

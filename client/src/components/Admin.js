@@ -11,7 +11,7 @@ function Admin() {
 
 
     return (
-        <div className="login">
+        <div className="admin">
 
             <h1>Admin</h1>
             <Link to="/">unauth homepage</Link>
