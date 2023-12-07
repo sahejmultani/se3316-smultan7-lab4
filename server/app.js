@@ -82,20 +82,6 @@ const completeHeroInfo = infoJSON.map((hero) => {
   
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.get("/",cors(),(req,res)=>{
 
 })
@@ -106,7 +92,7 @@ app.post("/login",async(req,res)=>{
     const{email,password}=req.body
 
     try{
-        const check=await collection.findOne({email:email})
+        const check=await collection.findOne({email:email, password:password}) //fixed user login
 
         if(check){
             res.json("exist")
@@ -196,4 +182,27 @@ app.get("/authorized/search", (req, res) => {
   
     res.status(200).json({ results: searchResults });
   });
+
+
+
+
+
+  // Endpoint to create a new list
+// Array to store lists
+let lists = [];
+
+
+app.post('/api/lists', (req, res) => {
+    const { name } = req.body;
   
+    // Handle list creation logic here (you might want to store lists in a database)
+    // For now, let's just store it in memory
+    userLists[name] = { name, superheroes: [] };
+  
+    res.json({ success: true, message: 'List created successfully' });
+  });
+
+  app.get('/api/lists', (req, res) => {
+    // For simplicity, let's assume userLists is a global variable storing user lists
+    res.json({ lists: Object.values(userLists) });
+  });

@@ -36,6 +36,7 @@ function Home() {
     const [searchResults, setSearchResults] = useState([]);
     const [expandedResults, setExpandedResults] = useState([]);
 
+   
     const location=useLocation()
 
     useEffect(() => {
@@ -45,6 +46,8 @@ function Home() {
           setSearchResults([]);
           return;
         }
+
+        
   
       const fetchSearchResults = async () => {
         try {
@@ -60,7 +63,10 @@ function Home() {
       };
   
       fetchSearchResults();
-    }, [nameSearch, powerSearch, raceSearch, publisherSearch]);
+    }, [nameSearch, powerSearch, raceSearch, publisherSearch]); 
+
+
+
   
     // Function to toggle expanded state for a result
     const toggleExpanded = (id) => {
@@ -79,19 +85,90 @@ function Home() {
       };
 
 
+/* 
+list functions
+*/
+
+const [lists, setLists] = useState([]);
+  const [listName, setListName] = useState("");
+
+   // Load lists from localStorage when the component mounts
+   useEffect(() => {
+    const storedLists = localStorage.getItem("userLists");
+    if (storedLists) {
+      setLists(JSON.parse(storedLists));
+    }
+  }, []);
+
+  // Save lists to localStorage whenever lists change
+  useEffect(() => {
+    localStorage.setItem("userLists", JSON.stringify(lists));
+  }, [lists]);
+
+  // Function to handle list creation
+  const createList = (e) => {
+    e.preventDefault();
+    if (listName.trim() === "") {
+      alert("Please enter a valid list name.");
+      return;
+    }
+
+    // Create a new list object
+    const newList = {
+      id: lists.length + 1, // You might want to use a better ID generation method
+      name: listName,
+      superheroes: [],
+    };
+
+    // Update the lists state with the new list
+    setLists((prevLists) => [...prevLists, newList]);
+
+    // Clear the listName state for the next list
+    setListName("");
+  };
+
+
+  
+
     return (
       <div className="authHomeInital">
         <div className="AuthorizedHomepage">
-        <h1>Welcome to your dashboard {location.state.id}!</h1>
+        <h1>Welcome to your dashboard {location.state?.id || 'User'}!</h1>
 
           <button className='logoutButton'>LOGOUT</button>
 
           <div className="authAbout">
             <h3>You are now signed in and are able to create and view many lists of superheroes! Start typing to search</h3>
-            
-            
           </div>
-        </div>
+          
+          <div className='create-lists'>
+        <h3>Lists</h3>
+        <form>
+          {/* Input for entering list name */}
+          <input
+            type="text"
+            placeholder="Enter List Name"
+            value={listName}
+            onChange={(e) => setListName(e.target.value)}
+          />
+          {/* Button to create a new list */}
+          <button className='listBtn' onClick={createList}>Create List</button>
+        </form>
+      </div>
+            <br/>
+            <br/>
+            {/* Display the user's lists */}
+      <div className='view-lists'>
+        <h3>Your Lists</h3>
+        <ul>
+          {lists.map((list) => (
+            <li key={list.id}>{list.name}</li>
+          ))}
+        </ul>
+      </div>
+
+
+      </div>
   
         <form className="authSearch">
         <input

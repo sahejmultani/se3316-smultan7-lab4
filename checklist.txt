@@ -1,9 +1,13 @@
 -dcma (if comment is bad, user can flag comment)
+
 -unauth can see a few lists , auth can CRUD
 -hash password with bcrypt
 -get JWT working
 -link to duckduck go search with name and publisher
 
+Race conditions such as modification, deletion and visibility changes by another user after the list is displayed, but before the list is expanded are handled gracefully.
+
+for each list, expand the heroes for info
 
 LOGIN/SIGNUp
 -prompt user to enter email or password if field is empty

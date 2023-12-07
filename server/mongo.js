@@ -9,6 +9,7 @@ mongoose.connect(mongoUrl)
 
 
 
+
 const newSchema=new mongoose.Schema({
     name:{
         type:String,
@@ -22,8 +23,20 @@ const newSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    lists: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'List'
+    }],
 })
+
+const listSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  // Add more fields as needed for your lists
+});
 
 newSchema.pre('save', async function (next) { //hashing password
     try {
@@ -38,5 +51,5 @@ newSchema.pre('save', async function (next) { //hashing password
   });
 
 const collection = mongoose.model("collection",newSchema)
-
+const List = mongoose.model("List", listSchema);
 module.exports=collection
