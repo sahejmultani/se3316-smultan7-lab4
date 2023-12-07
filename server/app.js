@@ -1,10 +1,11 @@
 //unauth, auth, and admin should have seperate endpoints
 
 const express = require("express")
-const collection = require("./mongo")
+const {collection, List} = require("./mongo")
 const cors = require("cors")
 const app = express()
 const fs = require('fs')
+const bcrypt = require('bcrypt')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -88,18 +89,26 @@ app.get("/",cors(),(req,res)=>{
 
 //add get method to retrieve all superheros insomnia
 
+
+
 app.post("/login",async(req,res)=>{
     const{email,password}=req.body
 
     try{
-        const check=await collection.findOne({email:email, password:password}) //fixed user login
+        const checkUser=await collection.findOne({email:email}) 
+        const passwordMatch = await bcrypt.compare(password, checkUser.password);
 
-        if(check){
+        if(!checkUser){
+            res.json("notexist")
+        }
+        
+         else if(checkUser && passwordMatch){
             res.json("exist")
             
         }
+        
         else{
-            res.json("notexist")
+            res.json("Invalid password")
         }
 
     }
@@ -107,17 +116,21 @@ app.post("/login",async(req,res)=>{
         res.json("fail")
     } 
 
-})
+}) 
+
 
 
 
 app.post("/signup",async(req,res)=>{
     const{name, email,password}=req.body
 
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     const data={
         name: name,
         email:email,
-        password:password
+        password:hashedPassword
     }
 
     try{
@@ -191,18 +204,27 @@ app.get("/authorized/search", (req, res) => {
 // Array to store lists
 let lists = [];
 
-
-app.post('/api/lists', (req, res) => {
-    const { name } = req.body;
+/*
+app.post('/api/lists', async (req, res) => {
+    const { name, superheroes } = req.body;
   
-    // Handle list creation logic here (you might want to store lists in a database)
-    // For now, let's just store it in memory
-    userLists[name] = { name, superheroes: [] };
+    try {
+      const newList = new List({
+        name,
+        superheroes,
+      });
   
-    res.json({ success: true, message: 'List created successfully' });
-  });
-
-  app.get('/api/lists', (req, res) => {
-    // For simplicity, let's assume userLists is a global variable storing user lists
-    res.json({ lists: Object.values(userLists) });
-  });
+      await newList.save();
+  
+      // Add the new list to the user's lists in the 'collection' model
+      const user = await collection.findOneAndUpdate(
+        { email: req.body.email  },
+        { $push: { lists: newList._id } },
+        { new: true }
+      );
+  
+      res.status(201).json(newList);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }); */

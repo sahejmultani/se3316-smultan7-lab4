@@ -34,8 +34,12 @@ function Login() {
                     setUserName(name);
                     history("/home",{state:{id:userName}})
                 }
+                
                 else if(res.data=="notexist"){
                     alert("User has not signed up")
+                }
+                else if(res.data == "Invalid password"){
+                    alert("Invalid password")
                 }
             })
             .catch(e=>{

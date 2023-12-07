@@ -35,6 +35,7 @@ const listSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  superheroes:[String],
   // Add more fields as needed for your lists
 });
 
@@ -52,4 +53,4 @@ newSchema.pre('save', async function (next) { //hashing password
 
 const collection = mongoose.model("collection",newSchema)
 const List = mongoose.model("List", listSchema);
-module.exports=collection
+module.exports={collection,List}

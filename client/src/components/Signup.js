@@ -6,7 +6,6 @@ import { useNavigate, Link } from "react-router-dom"
 import '../styling/Signup.css'
 
 
-
 function Login() {
     const history=useNavigate();
 
@@ -14,9 +13,11 @@ function Login() {
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
 
+  
+
+
     async function submit(e){
         e.preventDefault();
-
         try{
 
             await axios.post("http://localhost:8000/signup",{
