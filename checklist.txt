@@ -1,9 +1,0 @@
--dcma (if comment is bad, user can flag comment)
-
--unauth can see a few lists , auth can CRUD
--get JWT working
-
-
-for each list, expand the heroes for info
-
--add public lists to unauth page
