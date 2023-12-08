@@ -256,7 +256,6 @@ const [topLists, setTopLists] = useState([]);
                 <p>Superheroes: {list.superheroes.join(', ')}</p>
                 <p>Private: {list.private ? 'Yes' : 'No'}</p>
                 <p>Reviews: {list.reviews.join(', ') }</p>
-                {/* Add any additional information you want to display */}
               </>
             )}
           </div>

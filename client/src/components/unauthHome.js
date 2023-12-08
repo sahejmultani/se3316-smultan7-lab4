@@ -60,6 +60,7 @@ function UnauthHome() {
         const fetchTopLists = async () => {
             try {
                 const response = await axios.get("http://localhost:8000/api/top-lists");
+                console.log(response)
                 setTopLists(response.data.lists);
             } catch (error) {
                 console.error("Fetching top lists failed:", error.message);

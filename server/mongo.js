@@ -31,6 +31,10 @@ const newSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    deactivated: {
+      type: Boolean,
+      default: false, // Default to active when a new user is created
+    },
     lists: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'List',

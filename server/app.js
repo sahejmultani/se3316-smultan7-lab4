@@ -104,13 +104,18 @@ app.post("/login",async(req,res)=>{
         if(email =="admin@admin.com" && password =="admin"){
             res.json("admin")
         }
-        
+
+        else if (checkUser.deactivated) {
+          res.json('deactivated');
+        }
+
         else if(!checkUser){
             res.json("notexist")
         }
         
          else if(checkUser && passwordMatch){
             res.json("exist")
+            
             
         }
         
@@ -165,6 +170,18 @@ app.post("/signup",async(req,res)=>{
 app.listen(8000,()=>{
     console.log("port connected");
 })
+
+app.get("/api/top-lists", (req, res) => {
+  try {
+      const allUserLists = userLists.map((user) => user.lists).flat();
+      const topLists = allUserLists.slice(0, 10);
+      console.log("Top Lists:", topLists); // Log the top lists
+      res.status(200).json({ lists: topLists });
+  } catch (error) {
+      console.error("Fetching top lists failed:", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 //          FOR AUTHORIZED USER
@@ -267,12 +284,33 @@ app.get("/api/user-lists/:userID", (req, res) => {
 
 
 // Add this route to fetch all users
-app.get('/api/all-users', async (req, res) => {
+app.get('/admin/all-users', async (req, res) => {
   try {
     const allUsers = await collection.find();
     res.status(200).json({ users: allUsers });
   } catch (error) {
     console.error('Fetching all users failed:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.patch('/api/deactivate-account/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await collection.findOne({ _id: ObjectId(userId) });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Deactivate the user account
+    user.deactivated = true;
+    await user.save();
+
+    res.status(200).json({ success: true, message: 'Account deactivated successfully' });
+  } catch (error) {
+    console.error('Deactivating account failed:', error.message);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 });
