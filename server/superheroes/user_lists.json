@@ -25,7 +25,7 @@
           "listId": 2,
           "listName": "second list",
           "superheroes": ["Superman", "Ironman", "Abin Sur"],
-          "private": true
+          "private": false
         }
       ]
     },
@@ -46,9 +46,9 @@
         "lists": [
           {
             "listId": 1,
-            "listName": "hashed list",
+            "listName": "weak",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": false
+            "private": true
           }
         ]
       },{

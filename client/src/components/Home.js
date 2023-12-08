@@ -22,6 +22,7 @@ import '../styling/Home.css'
 import React, { useEffect, useState } from "react";
 import {useLocation, useNavigate, Link} from 'react-router-dom';
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
  
 
@@ -37,8 +38,8 @@ function Home() {
     const [searchResults, setSearchResults] = useState([]);
     const [expandedResults, setExpandedResults] = useState([]);
 
-   
 
+    
    
     const location=useLocation()
 
@@ -129,6 +130,17 @@ const [topLists, setTopLists] = useState([]);
         fetchTopLists();
     }, []);
 
+    const [expandedLists, setExpandedLists] = useState([]);
+    const toggleListExpanded = (listId) => {
+      setExpandedLists((prevExpanded) => {
+        if (prevExpanded.includes(listId)) {
+          return prevExpanded.filter((expandedId) => expandedId !== listId);
+        } else {
+          return [...prevExpanded, listId];
+        }
+      });
+    };
+
   
 
     return (
@@ -136,8 +148,10 @@ const [topLists, setTopLists] = useState([]);
         <div className="AuthorizedHomepage">
         <h1>Welcome to your dashboard {location.state?.id || 'User'}!</h1>
 
-          <button className='logoutButton'>LOGOUT</button>
-          <Link to="/DCMA">DCMA</Link>
+        <Link to="/login">
+        <button className='logoutButton'>LOGOUT</button>
+      </Link>          
+      <Link to="/DCMA">DCMA</Link>
           <div className="authAbout">
             <h3>You are now signed in and are able to create and view many lists of superheroes! Start typing to search</h3>
           </div>
@@ -156,7 +170,6 @@ const [topLists, setTopLists] = useState([]);
       </div>
             <br/>
             <br/>
-            {/* Display the user's lists */}
            
 
 
@@ -231,19 +244,22 @@ const [topLists, setTopLists] = useState([]);
       </table>
     )}
   </div>
-  <div className="view-lists">
-                    <h3>Top 10 Lists</h3>
-                    {topLists.map((list) => (
-                        <div key={list.listId} className="list-container">
-                            <h4>{list.listName}</h4>
-                            <p>Created by: {list.email}</p>
-                            <p>Superheroes: {list.superheroes.join(', ')}</p>
-                            <p>Private: {list.private ? 'Yes' : 'No'}</p>
-                            {/* Add any additional information you want to display */}
-                            
-                        </div>
-                    ))}
-                </div>
+  <h3>Top 10 Lists</h3>
+<div className="view-lists">
+        {topLists.slice(0, 10).map((list) => (
+          <div key={list.listId} className={`list-container ${expandedLists.includes(list.listId) ? 'expanded' : ''}`} onClick={() => toggleListExpanded(list.listId)}>
+            <h4>{list.listName}</h4>
+            {expandedLists.includes(list.listId) && (
+              <>
+                <p>Created by: {list.email}</p>
+                <p>Superheroes: {list.superheroes.join(', ')}</p>
+                <p>Private: {list.private ? 'Yes' : 'No'}</p>
+                {/* Add any additional information you want to display */}
+              </>
+            )}
+          </div>
+        ))}
+      </div>
       </div>
     );
   }
