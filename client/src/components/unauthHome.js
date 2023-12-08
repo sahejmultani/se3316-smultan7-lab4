@@ -54,6 +54,33 @@ function UnauthHome() {
     window.open(duckDuckGoUrl, '_blank');
   };
 
+  const [topLists, setTopLists] = useState([]);
+
+    useEffect(() => {
+        const fetchTopLists = async () => {
+            try {
+                const response = await axios.get("http://localhost:8000/api/top-lists");
+                setTopLists(response.data.lists);
+            } catch (error) {
+                console.error("Fetching top lists failed:", error.message);
+            }
+        };
+
+        fetchTopLists();
+    }, []);
+
+    const [expandedLists, setExpandedLists] = useState([]);
+    const toggleListExpanded = (listId) => {
+      setExpandedLists((prevExpanded) => {
+        if (prevExpanded.includes(listId)) {
+          return prevExpanded.filter((expandedId) => expandedId !== listId);
+        } else {
+          return [...prevExpanded, listId];
+        }
+      });
+    };
+  
+
   return (
     <div className="inital">
       <div className="unAuthHomepage">
@@ -146,6 +173,22 @@ function UnauthHome() {
     </table>
   )}
 </div>
+<h3>Top 10 Lists</h3>
+<div className="view-lists">
+        {topLists.slice(0, 10).map((list) => (
+          <div key={list.listId} className={`list-container ${expandedLists.includes(list.listId) ? 'expanded' : ''}`} onClick={() => toggleListExpanded(list.listId)}>
+            <h4>{list.listName}</h4>
+            {expandedLists.includes(list.listId) && (
+              <>
+                <p>Created by: {list.email}</p>
+                <p>Superheroes: {list.superheroes.join(', ')}</p>
+                <p>Private: {list.private ? 'Yes' : 'No'}</p>
+                {/* Add any additional information you want to display */}
+              </>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

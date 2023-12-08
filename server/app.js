@@ -31,6 +31,7 @@ const superheroPowers = powersJSON.map((hero) => { //gets powers of each here an
   };
 });
 
+
 //combines data from info json and the superheroPowers object array
 const completeHeroInfo = infoJSON.map((hero) => { 
   const matchingPowers = superheroPowers.find((powers) => powers.hero_names === hero.name);
@@ -84,8 +85,10 @@ const completeHeroInfo = infoJSON.map((hero) => {
 
 
 app.get("/",cors(),(req,res)=>{
-
+    
 })
+
+
 
 //add get method to retrieve all superheros insomnia
 
@@ -209,17 +212,18 @@ app.get("/authorized/search", (req, res) => {
 
 
   // Endpoint to create a new list
-// Array to store lists
-let lists = [];
 
+/*
+app.post('/api/lists/:userID',  (req, res) => {
+    const {listName, superheroIds } = req.body;
+    console.log(req);
+    console.log("request")
 
-app.post('/api/lists/:userID', async (req, res) => {
-    const {email, listName, superheroIds } = req.body;
-
-    //check userID by matching emails
 
     try {
-        const user = await collection.findOne(email)
+        const userID = (ObjectId)(req.params.userID)
+        const user =  collection.findById(userID);
+        
 
 
          // Check if the user exists
@@ -228,17 +232,20 @@ app.post('/api/lists/:userID', async (req, res) => {
       }
   
       // Check if the user already has 20 lists
-      if (user.lists.length >= 20) {
-        return res.status(400).json({ error: "You can't create more than 20 lists." });
-      }
+     
 
       const newList = {
+        userID: userID,
         name: listName,
       superheroes: superheroIds,
       }
 
-      user.lists.push(newList);
-      await user.save();
+      const list =  List.create(newList);
+
+
+      user.lists.push(list._id);
+       user.save();
+       list.save();
       res.status(201).json({ list: newList });
   
     } catch (error) {
@@ -246,4 +253,56 @@ app.post('/api/lists/:userID', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' })
     }
     
-  }); 
+  });  */
+
+
+
+//using fs and json
+
+
+  
+let userLists = JSON.parse(fs.readFileSync("superheroes/user_lists.json", "utf-8"));
+
+
+app.post("/api/create-list", (req, res) => {
+    const { userID, list } = req.body;
+
+    // Find the user in the userLists array
+    const user = userLists.find((user) => user.id === userID);
+
+    if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Generate a unique listId for the new list
+    const newListId = user.lists.length + 1;
+
+    // Add the new list to the user's lists
+    user.lists.push({
+        listId: newListId,
+        listName: list.listName,
+        superheroes: list.superheroes,
+        private: list.private || false, // Default to false if not provided
+    });
+
+    // Save the updated userLists to the JSON file
+    fs.writeFileSync("superheroes/user_lists.json.json", JSON.stringify(userLists, null, 2), "utf-8");
+
+    res.status(200).json({ success: true, message: "List created successfully" });
+});
+
+app.get("/api/top-lists", (req, res) => {
+    try {
+        // Assuming userLists is an array containing all user data
+        const allUserLists = userLists.map(user => user.lists).flat();
+
+        // Get the first 10 lists
+        const topLists = allUserLists.slice(0, 10);
+
+        res.status(200).json({ lists: topLists });
+    } catch (error) {
+        console.error("Fetching top lists failed:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+        
+    }
+});

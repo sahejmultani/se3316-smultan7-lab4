@@ -9,6 +9,7 @@ mongoose.connect(mongoUrl)
 
 
   const listSchema = new mongoose.Schema({
+    userID: String,
     name: {
       type: String,
       required: true
@@ -30,7 +31,10 @@ const newSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    lists: [listSchema],
+    lists: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'List',
+    }],
 });
 
 newSchema.pre('save', async function (next) { //hashing password

@@ -1,0 +1,133 @@
+[
+    {
+      "id": 1,
+      "email": "user@gmail.com",
+      "lists": [
+        {
+          "listId": 1,
+          "listName": "user1",
+          "superheroes": ["Abin Sur", "Batman"],
+          "private": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "email": "hashed@gmail.com",
+      "lists": [
+        {
+          "listId": 1,
+          "listName": "hashed list",
+          "superheroes": ["Abin Sur", "Iron Fist"],
+          "private": false
+        },
+        {
+          "listId": 2,
+          "listName": "second list",
+          "superheroes": ["Superman", "Ironman", "Abin Sur"],
+          "private": true
+        }
+      ]
+    },
+    {
+        "id": 3,
+        "email": "d@gmail.com",
+        "lists": [
+          {
+            "listId": 1,
+            "listName": "favList",
+            "superheroes": ["Abin Sur", "Iron Fist"],
+            "private": false
+          }
+        ]
+      },{
+        "id": 4,
+        "email": "hashed@gmail.com",
+        "lists": [
+          {
+            "listId": 1,
+            "listName": "hashed list",
+            "superheroes": ["Abin Sur", "Iron Fist"],
+            "private": false
+          }
+        ]
+      },{
+        "id": 5,
+        "email": "hashed@gmail.com",
+        "lists": [
+          {
+            "listId": 1,
+            "listName": "hashed list",
+            "superheroes": ["Abin Sur", "Iron Fist"],
+            "private": false
+          }
+        ]
+      },{
+        "id": 6,
+        "email": "hashed@gmail.com",
+        "lists": [
+          {
+            "listId": 1,
+            "listName": "hashed list",
+            "superheroes": ["Abin Sur", "Iron Fist"],
+            "private": false
+          }
+        ]
+      },{
+        "id": 7,
+        "email": "hashed@gmail.com",
+        "lists": [
+          {
+            "listId": 1,
+            "listName": "hashed list",
+            "superheroes": ["Abin Sur", "Iron Fist"],
+            "private": false
+          }
+        ]
+      },{
+        "id": 8,
+        "email": "hashed@gmail.com",
+        "lists": [
+          {
+            "listId": 1,
+            "listName": "hashed list",
+            "superheroes": ["Abin Sur", "Iron Fist"],
+            "private": false
+          }
+        ]
+      },{
+        "id": 9,
+        "email": "hashed@gmail.com",
+        "lists": [
+          {
+            "listId": 1,
+            "listName": "hashed list",
+            "superheroes": ["Abin Sur", "Iron Fist"],
+            "private": false
+          }
+        ]
+      },{
+        "id": 10,
+        "email": "hashed@gmail.com",
+        "lists": [
+          {
+            "listId": 1,
+            "listName": "hashed list",
+            "superheroes": ["Abin Sur", "Iron Fist"],
+            "private": false
+          }
+        ]
+      },{
+        "id": 11,
+        "email": "hashed@gmail.com",
+        "lists": [
+          {
+            "listId": 1,
+            "listName": "hashed list",
+            "superheroes": ["Abin Sur", "Iron Fist"],
+            "private": false
+          }
+        ]
+      }
+  ]
+  
