@@ -180,9 +180,10 @@ function UnauthHome() {
             <h4>{list.listName}</h4>
             {expandedLists.includes(list.listId) && (
               <>
-                <p>Created by: {list.email}</p>
+                <p>Created by: {list.id}</p>
                 <p>Superheroes: {list.superheroes.join(', ')}</p>
                 <p>Private: {list.private ? 'Yes' : 'No'}</p>
+                <p>Reviews: {list.reviews.join(', ') }</p>
                 {/* Add any additional information you want to display */}
               </>
             )}

@@ -7,7 +7,8 @@
           "listId": 1,
           "listName": "user1",
           "superheroes": ["Abin Sur", "Batman"],
-          "private": false
+          "private": false,
+          "reviews":["1/5", "2/5 - mid list"]
         }
       ]
     },
@@ -19,13 +20,16 @@
           "listId": 1,
           "listName": "hashed list",
           "superheroes": ["Abin Sur", "Iron Fist"],
-          "private": false
+          "private": false,
+          "reviews":[ "4/5 - nice list"]
         },
         {
           "listId": 2,
           "listName": "second list",
           "superheroes": ["Superman", "Ironman", "Abin Sur"],
-          "private": false
+          "private": false,
+          "reviews":["1/5", "2/5 - mid list"]
+
         }
       ]
     },
@@ -37,7 +41,9 @@
             "listId": 1,
             "listName": "favList",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": false
+            "private": false,
+            "reviews":["1/5", "2/5 - mid list"]
+
           }
         ]
       },{
@@ -48,7 +54,9 @@
             "listId": 1,
             "listName": "weak",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": true
+            "private": true,
+            "reviews":["1/5", "2/5 - mid list"]
+
           }
         ]
       },{
@@ -59,7 +67,9 @@
             "listId": 1,
             "listName": "hashed list",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": false
+            "private": false,
+            "reviews":["1/5", "2/5 - mid list"]
+
           }
         ]
       },{
@@ -70,7 +80,9 @@
             "listId": 1,
             "listName": "hashed list",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": false
+            "private": false,
+            "reviews":["1/5", "2/5 - mid list"]
+
           }
         ]
       },{
@@ -81,7 +93,9 @@
             "listId": 1,
             "listName": "hashed list",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": false
+            "private": false,
+            "reviews":["1/5", "2/5 - mid list"]
+
           }
         ]
       },{
@@ -92,7 +106,9 @@
             "listId": 1,
             "listName": "hashed list",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": false
+            "private": false,
+            "reviews":["1/5", "2/5 - mid list"]
+
           }
         ]
       },{
@@ -103,7 +119,9 @@
             "listId": 1,
             "listName": "hashed list",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": false
+            "private": false,
+            "reviews":["1/5", "2/5 - mid list"]
+
           }
         ]
       },{
@@ -114,7 +132,9 @@
             "listId": 1,
             "listName": "hashed list",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": false
+            "private": false,
+            "reviews":["1/5", "2/5 - mid list"]
+
           }
         ]
       },{
@@ -125,7 +145,8 @@
             "listId": 1,
             "listName": "hashed list",
             "superheroes": ["Abin Sur", "Iron Fist"],
-            "private": false
+            "private": false,
+            "reviews":["1/5", "2/5 - mid list"]
           }
         ]
       }

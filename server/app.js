@@ -208,101 +208,71 @@ app.get("/authorized/search", (req, res) => {
   });
 
 
-
-
-
   // Endpoint to create a new list
-
-/*
-app.post('/api/lists/:userID',  (req, res) => {
-    const {listName, superheroIds } = req.body;
-    console.log(req);
-    console.log("request")
-
-
-    try {
-        const userID = (ObjectId)(req.params.userID)
-        const user =  collection.findById(userID);
-        
-
-
-         // Check if the user exists
-    if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-  
-      // Check if the user already has 20 lists
-     
-
-      const newList = {
-        userID: userID,
-        name: listName,
-      superheroes: superheroIds,
-      }
-
-      const list =  List.create(newList);
-
-
-      user.lists.push(list._id);
-       user.save();
-       list.save();
-      res.status(201).json({ list: newList });
-  
-    } catch (error) {
-        console.error('Error creating list:', error.message);
-        res.status(500).json({ error: 'Internal server error' })
-    }
-    
-  });  */
-
-
-
-//using fs and json
-
 
   
 let userLists = JSON.parse(fs.readFileSync("superheroes/user_lists.json", "utf-8"));
 
-
 app.post("/api/create-list", (req, res) => {
-    const { userID, list } = req.body;
+  const { userID, listName, isPrivate } = req.body;
 
-    // Find the user in the userLists array
-    const user = userLists.find((user) => user.id === userID);
+  const user = userLists.find((user) => user.id === userID);
 
-    if (!user) {
-        return res.status(404).json({ success: false, message: "User not found" });
-    }
+  if (!user) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
 
-    // Generate a unique listId for the new list
-    const newListId = user.lists.length + 1;
+  const newListId = user.lists.length + 1;
 
-    // Add the new list to the user's lists
-    user.lists.push({
-        listId: newListId,
-        listName: list.listName,
-        superheroes: list.superheroes,
-        private: list.private || false, // Default to false if not provided
-    });
+  user.lists.push({
+    listId: newListId,
+    listName: listName,
+    superheroes: [],
+    private: isPrivate || false,
+  });
 
-    // Save the updated userLists to the JSON file
-    fs.writeFileSync("superheroes/user_lists.json.json", JSON.stringify(userLists, null, 2), "utf-8");
+  fs.writeFileSync("user_lists.json", JSON.stringify(userLists, null, 2), "utf-8");
 
-    res.status(200).json({ success: true, message: "List created successfully" });
+  res.status(200).json({ success: true, message: "List created successfully", listId: newListId });
 });
 
-app.get("/api/top-lists", (req, res) => {
-    try {
-        // Assuming userLists is an array containing all user data
-        const allUserLists = userLists.map(user => user.lists).flat();
+app.post("/api/add-superhero/:listId", (req, res) => {
+  const { listId } = req.params;
+  const { superheroName } = req.body;
 
-        // Get the first 10 lists
-        const topLists = allUserLists.slice(0, 10);
+  const list = userLists.flatMap((user) => user.lists).find((list) => list.listId == listId);
 
-        res.status(200).json({ lists: topLists });
-    } catch (error) {
-        console.error("Fetching top lists failed:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-        
-    }
+  if (!list) {
+    return res.status(404).json({ success: false, message: "List not found" });
+  }
+
+  list.superheroes.push(superheroName);
+  fs.writeFileSync("user_lists.json", JSON.stringify(userLists, null, 2), "utf-8");
+
+  res.status(200).json({ success: true, message: "Superhero added successfully", superhero: superheroName });
+});
+
+app.get("/api/user-lists/:userID", (req, res) => {
+  const { userID } = req.params;
+
+  const user = userLists.find((user) => user.id === userID);
+
+  if (!user) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+
+  res.status(200).json({ lists: user.lists });
+});
+
+
+
+// Add this route to fetch all users
+app.get('/api/all-users', async (req, res) => {
+  try {
+    const allUsers = await collection.find();
+    res.status(200).json({ users: allUsers });
+  } catch (error) {
+    console.error('Fetching all users failed:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });

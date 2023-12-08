@@ -7,6 +7,7 @@ import Admin from "./components/Admin"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
 import Dcma from "./components/Dcma"
+import AuthLists from "./components/AuthLists"
 
 function App() {
   return (
@@ -19,8 +20,7 @@ function App() {
           <Route path="/home" element={<Home/>}/>
           <Route path="/admin" element={<Admin/>}/>
           <Route path="/dcma" element={<Dcma/>}/>
-
-
+          <Route path="/authLists" element={<AuthLists/>}/>
 
         </Routes>
       </Router>

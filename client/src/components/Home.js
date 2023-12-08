@@ -95,7 +95,7 @@ const [newListName, setNewListName] = useState('');
 
 const createList = async () => {
     try {
-        const response = await axios.post("http://localhost:8000/api/create-list", {
+        const response = await axios.post("http://localhost:8000/auth/create-list", {
             userID: location.state?.id,
             list: {
                 listName: newListName.trim(), // Use the entered list name
@@ -157,16 +157,17 @@ const [topLists, setTopLists] = useState([]);
           </div>
           
           <div className='create-lists'>
+          <Link to="/authLists">Click to create lists</Link>
         <h3>Lists</h3>
         <form onSubmit={(e) => { e.preventDefault(); createList(); }}>
-                        <input
-                            type="text"
-                            placeholder="Enter list name"
-                            value={newListName}
-                            onChange={(e) => setNewListName(e.target.value)}
-                        />
-                        <button type="submit">Create a New List</button>
-                    </form>
+    <input
+        type="text"
+        placeholder="Enter list name"
+        value={newListName}
+        onChange={(e) => setNewListName(e.target.value)}
+    />
+    <button type="submit">Create a New List</button>
+</form>
       </div>
             <br/>
             <br/>
@@ -251,9 +252,10 @@ const [topLists, setTopLists] = useState([]);
             <h4>{list.listName}</h4>
             {expandedLists.includes(list.listId) && (
               <>
-                <p>Created by: {list.email}</p>
+                <p>Created by: {list.id}</p>
                 <p>Superheroes: {list.superheroes.join(', ')}</p>
                 <p>Private: {list.private ? 'Yes' : 'No'}</p>
+                <p>Reviews: {list.reviews.join(', ') }</p>
                 {/* Add any additional information you want to display */}
               </>
             )}
