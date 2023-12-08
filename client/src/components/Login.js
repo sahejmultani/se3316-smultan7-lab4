@@ -19,10 +19,17 @@ function Login() {
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
     
-
+    const isValidEmail = (email) => {
+        // Regular expression for a simple email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
     async function submit(e){
         e.preventDefault();
-
+        if (!isValidEmail(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
         try{
 
             await axios.post("http://localhost:8000/login",{
